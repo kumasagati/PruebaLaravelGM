@@ -1,0 +1,8 @@
+Theme Version 1.2 Updates 
+============================
+Added : gulp integrated
+
+Theme Version 1.1 Updates 
+============================
+Added : add notification when copied icon html
+
