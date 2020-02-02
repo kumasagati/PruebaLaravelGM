@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App;
-use App\Http\Requests\StoreCategoryPost;
-use App\Http\Requests\UpdateCategoryPut;
+use App\Http\Requests\StoreMedicinePost;
+use Illuminate\Support\Facades\Storage;
 
-class CategoryController extends Controller
+class MedicineController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +16,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $orc = App\Category::all();
-        return view("Categories/view", compact("orc"));
+        //
     }
 
     /**
@@ -28,7 +26,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view("Categories/insert");
+        $orc = App\Category::all();
+        return view("Medicines/insert", compact("orc"));
     }
 
     /**
@@ -37,17 +36,32 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreCategoryPost $request)
+    public function store(StoreMedicinePost $request)
     {
         $validated = $request->validated();
 
-        $orc = new App\Category();
-        $orc->cat_name = $request->cat_name;
+        $orm = new App\Medicine();
 
-        $orc->save();
+        //IMAGE
+        if ($request->file('med_image')) {
+            $path = Storage::disk('public')->put("images/medicines", $request->file("med_image"));
+            $orm->med_image = $path;
+        }
+
+        $orm->med_name = $request->med_name;
+        $orm->med_pharmaceutical_form = $request->med_pharmaceutical_form;
+        $orm->med_description = $request->med_description;
+        $orm->med_actives_components = $request->med_actives_components;
+        $orm->med_indications = $request->med_indications;
+        $orm->med_dosage = $request->med_dosage;
+        $orm->med_contraindications = $request->med_contraindications;
+        $orm->med_adverse_reactions = $request->med_adverse_reactions;
+        $orm->med_pharmacokinetics = $request->med_pharmacokinetics;
+
+        $orm->save();
 
         return response()->json([
-            "mensaje" => "<div class='alert alert-success'>Se ha registrado correctamente la categoria.</div>",
+            "mensaje" => "<div class='alert alert-success'>Se ha registrado correctamente el medicamento.</div>",
             "resultado" => "1"
         ]);
     }
@@ -71,9 +85,7 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $orc = App\Category::FindOrFail($id);
-
-        return view("Categories/update", compact("orc"));
+        //
     }
 
     /**
@@ -83,18 +95,9 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateCategoryPut $request, $id)
+    public function update(Request $request, $id)
     {
-        $validated = $request->validated();
-
-        $orc = App\Category::FindOrFail($id);
-        $orc->cat_name = $request->cat_name;
-        $orc->update();
-
-        return response()->json([
-            "mensaje" => "<div class='alert alert-success'>Se ha registrado correctamente la categoria.</div>",
-            "resultado" => "1"
-        ]);
+        //
     }
 
     /**
@@ -105,12 +108,6 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $orc = App\Category::FindOrFail($id);
-
-        $orc->delete();
-
-        return response()->json([
-            'mensaje' => $orc->cat_name . " fue eliminado correctamente"
-        ]);
+        //
     }
 }

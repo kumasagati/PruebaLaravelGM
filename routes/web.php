@@ -18,3 +18,7 @@ Route::get('/', function () {
 #region Categories
 Route::resource("categories", "CategoryController");
 #endregion
+
+#region Medicines
+Route::resource("medicines", "MedicineController");
+#endregion

@@ -25,6 +25,8 @@ class CreateMedicinesTable extends Migration
             $table->text("med_adverse_reactions");
             $table->text("med_pharmacokinetics");
             $table->string("med_image", 200);
+            $table->unsignedBigInteger("categories_cat_id");
+            $table->foreign("categories_cat_id")->references("id")->on("categories");
             $table->timestamps();
         });
     }
