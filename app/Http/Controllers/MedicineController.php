@@ -122,7 +122,9 @@ class MedicineController extends Controller
 
         // IMAGE
         if ($request->file('med_image')) {
-            Storage::disk("public")->delete($orm->med_image);
+            if ($orm->med_image !== "images/medicines/imagen_generica.png") {
+                Storage::disk("public")->delete($orm->med_image);
+            }
 
             $path = Storage::disk('public')->put("images/medicines", $request->file("med_image"));
             $orm->med_image = $path;
