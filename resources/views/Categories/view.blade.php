@@ -33,8 +33,9 @@
                                             <td>2</td>
                                             <td>
                                                 {!! Form::open(['route' => ['categories.destroy',$c->id],'method' => 'DELETE']) !!}
-                                                <a href="#" class="btn-delete"><i class="icofont icofont-ui-close"></i></a>
-                                                <a href="{{ route('categories.edit', $c->id) }}"><i class="icofont icofont-loop"></i></a>
+                                                <a href="#" class="btn-delete-cat" title="Borrar"><i class="icofont icofont-ui-close"></i></a>
+                                                <a href="{{ route('categories.edit', $c->id) }}"><i class="icofont icofont-loop" title="Actualizar Informacion"></i></a>
+                                                <a href="{{ route('categories.show', $c->id) }}"><i class="icofont icofont-open-eye" title="Ver Detalles"></i></a>
                                                 {!! Form::close() !!}
                                             </td>
                                         </tr>

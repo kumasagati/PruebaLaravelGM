@@ -57,7 +57,7 @@ $(document).ready(function() {
 
     $("#alert").hide();
     // Eliminacion de una Categoria por AJAX
-    $(".btn-delete").click(function(e) {
+    $(".btn-delete-cat").click(function(e) {
         e.preventDefault();
 
         if (!confirm("¿Esta seguro de eliminar la categoria?")) {
@@ -85,6 +85,7 @@ $(document).ready(function() {
     //Validacion e insercion de un medicamento por AJAX
     $("form#form_add_med").submit(function(e) {
         e.preventDefault();
+
         $("#validation_results").html(
             "<div class='alert alert-warning'>Validando informacion, espere un momento...</div>"
         );
@@ -92,20 +93,88 @@ $(document).ready(function() {
         $.ajax({
             url: $(this).attr("action"),
             type: "POST",
-            data: $(this).serialize(),
+            data: new FormData(this),
+            dataType: "JSON",
+            processData: false,
+            contentType: false,
+            cache: false,
             success: obj => {
                 $("#validation_results").html(obj.mensaje);
+                console.log(obj);
 
                 if (obj.resultado == "1") {
                     location.href = route("medicines.index");
                 }
             },
             error: data => {
+                console.log(data);
+
                 if (data.status == "422") {
                     var errores = data.responseJSON.errors;
                     mostrarErrores(errores);
                 }
             }
+        });
+    });
+
+    // Validacion y Actualizacion de un medicamento por AJAX
+    $("form#form_update_med").submit(function(e) {
+        e.preventDefault();
+
+        $("#validation_results").html(
+            "<div class='alert alert-warning'>Validando informacion, espere un momento...</div>"
+        );
+
+        $.ajax({
+            url: $(this).attr("action"),
+            type: "POST",
+            data: new FormData(this),
+            dataType: "JSON",
+            processData: false,
+            contentType: false,
+            cache: false,
+            success: obj => {
+                $("#validation_results").html(obj.mensaje);
+                console.log(obj);
+
+                if (obj.resultado == "1") {
+                    location.href = route("medicines.index");
+                }
+            },
+            error: data => {
+                console.log(data);
+
+                if (data.status == "422") {
+                    var errores = data.responseJSON.errors;
+                    mostrarErrores(errores);
+                }
+            }
+        });
+    });
+
+    $("#alert").hide();
+
+    // Eliminicaion de un Medicamento por AJAX
+    $(".btn-delete-med").click(function(e) {
+        e.preventDefault();
+
+        if (!confirm("¿Esta seguro de eliminar el medicamento?")) {
+            return false;
+        }
+
+        var row = $(this).parents(".col-md-6");
+        var form = $(this).parents("form");
+        var url = form.attr("action");
+
+        $("#alert").show();
+
+        $.post(url, form.serialize(), data => {
+            row.fadeOut();
+            $("#alert").html(data.mensaje);
+        }).fail(data => {
+            $("#alert").html("Algo ha salido mal.");
+
+            console.log(data);
         });
     });
 

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App;
 use App\Http\Requests\StoreMedicinePost;
+use App\Http\Requests\UpdateMedicinePut;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class MedicineController extends Controller
@@ -16,7 +18,12 @@ class MedicineController extends Controller
      */
     public function index()
     {
-        //
+        $orm = DB::table("medicines")
+            ->join("categories", "medicines.categories_cat_id", "=", "categories.id")
+            ->select("medicines.*", "categories.id as cat_id", "categories.cat_name")
+            ->paginate(8);
+
+        return view("Medicines/view", compact("orm"));
     }
 
     /**
@@ -38,8 +45,6 @@ class MedicineController extends Controller
      */
     public function store(StoreMedicinePost $request)
     {
-        $validated = $request->validated();
-
         $orm = new App\Medicine();
 
         //IMAGE
@@ -57,6 +62,7 @@ class MedicineController extends Controller
         $orm->med_contraindications = $request->med_contraindications;
         $orm->med_adverse_reactions = $request->med_adverse_reactions;
         $orm->med_pharmacokinetics = $request->med_pharmacokinetics;
+        $orm->categories_cat_id = $request->categories_cat_id;
 
         $orm->save();
 
@@ -74,7 +80,13 @@ class MedicineController extends Controller
      */
     public function show($id)
     {
-        //
+        $orm = DB::table("medicines")
+            ->join("categories", "medicines.categories_cat_id", "=", "categories.id")
+            ->select("medicines.*", "categories.id as cat_id", "categories.cat_name")
+            ->where("medicines.id", "=", $id)
+            ->get();
+
+        return view("Medicines/detail", compact("orm"));
     }
 
     /**
@@ -85,7 +97,10 @@ class MedicineController extends Controller
      */
     public function edit($id)
     {
-        //
+        $orm = App\Medicine::FindOrFail($id);
+        $orc = App\Category::all();
+
+        return view("Medicines/update", compact("orm", "orc"));
     }
 
     /**
@@ -95,9 +110,35 @@ class MedicineController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateMedicinePut $request, $id)
     {
-        //
+        $orm = App\Medicine::FindOrFail($id);
+
+        // IMAGE
+        if ($request->file('med_image')) {
+            Storage::disk("public")->delete($orm->med_image);
+
+            $path = Storage::disk('public')->put("images/medicines", $request->file("med_image"));
+            $orm->med_image = $path;
+        }
+
+        $orm->med_name = $request->med_name;
+        $orm->med_pharmaceutical_form = $request->med_pharmaceutical_form;
+        $orm->med_description = $request->med_description;
+        $orm->med_actives_components = $request->med_actives_components;
+        $orm->med_indications = $request->med_indications;
+        $orm->med_dosage = $request->med_dosage;
+        $orm->med_contraindications = $request->med_contraindications;
+        $orm->med_adverse_reactions = $request->med_adverse_reactions;
+        $orm->med_pharmacokinetics = $request->med_pharmacokinetics;
+        $orm->categories_cat_id = $request->categories_cat_id;
+
+        $orm->update();
+
+        return response()->json([
+            "mensaje" => "<div class='alert alert-success'>Se ha actualizado correctamente el medicamento.</div>",
+            "resultado" => "1"
+        ]);
     }
 
     /**
@@ -108,6 +149,14 @@ class MedicineController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $orm = App\Medicine::FindOrFail($id);
+
+        Storage::disk("public")->delete($orm->med_image);
+
+        $orm->delete();
+
+        return response()->json([
+            "mensaje" => "El " . $orm->med_name . " ha sido eliminado correctamente."
+        ]);
     }
 }

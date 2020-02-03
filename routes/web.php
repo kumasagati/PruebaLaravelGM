@@ -22,3 +22,7 @@ Route::resource("categories", "CategoryController");
 #region Medicines
 Route::resource("medicines", "MedicineController");
 #endregion
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

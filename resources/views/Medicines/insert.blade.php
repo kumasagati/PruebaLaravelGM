@@ -35,7 +35,7 @@
                             </div>
                             <div class="row">
                                 <div class="col">
-                                    <label for="med_image"><b>Imagen</b></label>
+                                    <label for="med_image"><b>Imagen (640x600px)</b></label>
                                     <input type="file" name="med_image" id="med_image" class="form-control" accept="image/*">
                                 </div>
                             </div>
@@ -64,6 +64,12 @@
                                 <div class="col">
                                     <label for="med_indications"><b>Indicaciones</b></label>
                                     <textarea name="med_indications" id="med_indications" cols="30" rows="5" class="form-control"></textarea>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <label for="med_contraindications"><b>Contraidicaciones</b></label>
+                                    <textarea name="med_contraindications" id="med_contraindications" cols="30" rows="5" class="form-control"></textarea>
                                 </div>
                             </div>
                             <div class="row">

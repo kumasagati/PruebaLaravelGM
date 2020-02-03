@@ -26,7 +26,7 @@ class StoreMedicinePost extends FormRequest
         return [
             "med_name" => "required|max:100|unique:medicines,med_name",
             "med_pharmaceutical_form" => "required",
-            "med_image" => "image",
+            "med_image" => "required|image|dimensions:min_width=635,min_height=595,max_width=645,max_height=605",
             "med_actives_components" => "required|max:100",
             "categories_cat_id" => "required",
             "med_description" => "required",
@@ -51,7 +51,9 @@ class StoreMedicinePost extends FormRequest
             "med_name.max" => "El campo <b>Nombre de Medicamento</b> puede tener maximo <b>100</b> caracteres.",
             "med_actives_components.max" => "El campo <b>Principios Activos</b> puede tener un maximo de <b>100</b> caracteres.",
             "med_image.image" => "El campo <b>Imagen</b> solo puede contener imagenes.",
-            "med_name.unique" => "Ya existe un medicamento con el nombre ingresado."
+            "med_image.required" => "La <b>imagen</b> es obligatoria.",
+            "med_name.unique" => "Ya existe un medicamento con el nombre ingresado.",
+            "med_image.dimensions" => "La imagen debe tener una resolucion de 640x600"
         ];
     }
 }

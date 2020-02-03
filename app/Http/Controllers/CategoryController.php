@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App;
 use App\Http\Requests\StoreCategoryPost;
 use App\Http\Requests\UpdateCategoryPut;
+use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
@@ -60,7 +61,12 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        //
+        $orc = App\Category::FindOrFail($id);
+        $orm = DB::table("medicines")
+            ->where("medicines.categories_cat_id", "=", $id)
+            ->paginate(8);
+
+        return view("Categories/detail", compact("orc", "orm"));
     }
 
     /**
@@ -92,7 +98,7 @@ class CategoryController extends Controller
         $orc->update();
 
         return response()->json([
-            "mensaje" => "<div class='alert alert-success'>Se ha registrado correctamente la categoria.</div>",
+            "mensaje" => "<div class='alert alert-success'>Se ha actualizado correctamente la categoria.</div>",
             "resultado" => "1"
         ]);
     }
