@@ -1,6 +1,4 @@
-@extends('menu')
-
-@section('contenido')
+<?php $__env->startSection('contenido'); ?>
     <div class="container-fluid">
         <div class="page-header">
             <div class="row">
@@ -16,7 +14,8 @@
             <div class="col-xl-12 col-lg-6 col-sm-12">
                 <div class="card">
                     <div class="card-body">
-                        {!! Form::open(['route' => ['register'],'method' => 'POST','id' => 'form_register']) !!}
+                        <?php echo Form::open(['route' => ['register'],'method' => 'POST','id' => 'form_register']); ?>
+
                             <div class="row">
                                 <div class="col">
                                     <label for="usu_name"><b>Nombre</b></label>
@@ -53,10 +52,13 @@
                             <div class="row justify-content-center">
                                 <button type="submit" class="btn btn-primary-gradien">Registrar</button>
                             </div>
-                        {!! Form::close() !!}
+                        <?php echo Form::close(); ?>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('menu', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\Kuma\MAMP\htdocs\PruebaLaravelGM\resources\views/auth/register.blade.php ENDPATH**/ ?>

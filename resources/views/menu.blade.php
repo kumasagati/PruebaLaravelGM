@@ -101,10 +101,14 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
-                                    <i class="icon-power-off"></i>
-                                    Logout
-                                </a>
+                                <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        <i class="icon-power-off"></i>
+                                        {{ __('Logout') }}
+                                    </a>
+
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
                             </li>
                         </ul>
                     </li>
@@ -124,7 +128,7 @@
             <ul class="sidebar-menu">
                 <li class="active">
                     <div class="sidebar-title">General</div>
-                    <a href="#" class="sidebar-header">
+                    <a href="{{ route('inicio') }}" class="sidebar-header">
                         <i class="icon-desktop"></i><span>Dashboard</span>
                     </a>
                 </li>
@@ -166,6 +170,27 @@
                             <a href="{{ route('medicines.index') }}">
                                 <i class="fa fa-angle-right"></i>
                                 Listado de Medicamentos
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#" class="sidebar-header">
+                        <i class="icofont icofont-ui-user"></i>
+                        Usuarios
+                        <i class="fa fa-angle-right pull-right"></i>
+                    </a>
+                    <ul class="sidebar-submenu">
+                        <li>
+                            <a href="{{ route('register') }}">
+                                <i class="fa fa-angle-right"></i>
+                                Agregar Nuevo
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-angle-right"></i>
+                                Listado de Usuarios
                             </a>
                         </li>
                     </ul>

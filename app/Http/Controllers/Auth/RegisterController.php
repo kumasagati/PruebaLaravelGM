@@ -28,7 +28,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -37,7 +37,7 @@ class RegisterController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('auth');
     }
 
     /**
@@ -49,9 +49,27 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'usu_name' => ['required', 'string', 'max:255'],
+            'usu_email' => ['required', 'string', 'email', 'max:255', 'unique:users,usu_email'],
+            'usu_password' => ['required', 'string', 'min:8', 'confirmed'],
+            'usu_document' => ['required', 'string', 'numeric', 'digits_between:7,12', 'unique:users,usu_document']
+        ], [
+            "usu_name.required" => "El campo <b>Nombre</b> es obligatorio.",
+            "usu_email.required" => "El campo <b>Correo Electronico</b> es obligatorio.",
+            "usu_password.required" => "El campo <b>Contraseña</b> es obligatorio.",
+            "usu_document.required" => "El campo <b>Documento<b> es obligatorio.",
+            "usu_name.string" => "El campo <b>Nombre</b> no puede estar vacio.",
+            "usu_email.string" => "El campo <b>Correo Electronico</b> no puede estar vacio.",
+            "usu_password.string" => "El campo <b>Contraseña</b> no puede estar vacio.",
+            "usu_document.numeric" => "El campo <b>Documento</b> debe contener numeros.",
+            "usu_name.max" => "El campo <b>Nombre</b> no puede tener mas 255 caracteres.",
+            "usu_email.max" => "El campo <b>Correo Electronico</b> no puede tener mas de 255 caracteres.",
+            "usu_document.digits_between" => "El campo <b>Documento</b> debe tener entre 7 y 12 digitos.",
+            "usu_email.email" => "El campo <b>Correo Electronico</b> debe contener un email valido.",
+            "usu_password.min" => "El campo <b>Contraseña</b> debe tener minimo 8 caracteres.",
+            "usu_password.confirmed" => "Las contraseñas no coinciden.",
+            "usu_email.unique" => "Ya existe un usuario registrado con ese <b>Correo Electronico</b>.",
+            "usu_document.unique" => "Ya existe un usuario registrado con ese <b>Documento</b>."
         ]);
     }
 
@@ -64,9 +82,10 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'usu_name' => $data['usu_name'],
+            'usu_email' => $data['usu_email'],
+            'usu_password' => Hash::make($data['usu_password']),
+            'usu_document' => $data['usu_document']
         ]);
     }
 }

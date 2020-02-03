@@ -181,6 +181,66 @@ $(document).ready(function() {
     //#endregion
 });
 
+//#region Users
+
+// Validacion e insercion de un usuario
+$("form#form_register").submit(function(e) {
+    e.preventDefault();
+    $("#validation_results").html(
+        "<div class='alert alert-warning'>Validando informacion, por favor espere...</div>"
+    );
+
+    $.ajax({
+        url: $(this).attr("action"),
+        type: "POST",
+        data: $(this).serialize(),
+        success: obj => {
+            $("#validation_results").html(obj.mensaje);
+
+            if (obj.resultado == "1") {
+                location.href = route("inicio");
+            }
+        },
+        error: data => {
+            if (data.status == "422") {
+                var errores = data.responseJSON.errors;
+                mostrarErrores(errores);
+            }
+        }
+    });
+});
+
+// Validacion y logueo de un usuario
+$("form#form_login").submit(function(e) {
+    e.preventDefault();
+    $("#validation_results").html(
+        "<div class='alert alert-warning'>Validando informacion, por favor espere...</div>"
+    );
+
+    $.ajax({
+        url: $(this).attr("action"),
+        type: "POST",
+        data: $(this).serialize(),
+        success: obj => {
+            $("#validation_results").html(obj.mensaje);
+
+            if (obj.resultado == "1") {
+                location.href = route("inicio");
+            }
+        },
+        error: data => {
+            console.log(data);
+
+            if (data.status == "422") {
+                var errores = data.responseJSON.errors;
+                mostrarErrores(errores);
+            }
+        }
+    });
+});
+
+//#endregion
+
 // Funcion que evita que los multiclick en el submit de un formulario
 var isSend = false;
 function checkSubmit() {

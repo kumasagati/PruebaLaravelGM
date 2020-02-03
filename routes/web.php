@@ -11,9 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+#region DashBoard
+Route::get("/", "DashboardController@index")->name("inicio");
+#endregion
 
 #region Categories
 Route::resource("categories", "CategoryController");
@@ -23,6 +23,6 @@ Route::resource("categories", "CategoryController");
 Route::resource("medicines", "MedicineController");
 #endregion
 
+#region Users
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+#endregion

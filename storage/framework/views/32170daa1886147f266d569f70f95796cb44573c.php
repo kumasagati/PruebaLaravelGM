@@ -7,8 +7,8 @@
     <meta name="description" content="universal admin is super flexible, powerful, clean & modern responsive bootstrap 4 admin template with unlimited possibilities.">
     <meta name="keywords" content="admin template, universal admin template, dashboard template, flat admin template, responsive admin template, web app">
     <meta name="author" content="pixelstrap">
-    <link rel="icon" href="{{ asset('themes/themeforest/html_n_resources/assets/images/favicon.png') }}" type="image/x-icon" />
-    <link rel="shortcut icon" href="{{ asset('themes/themeforest/html_n_resources/assets/images/favicon.png') }}" type="image/x-icon" />
+    <link rel="icon" href="<?php echo e(asset('themes/themeforest/html_n_resources/assets/images/favicon.png')); ?>" type="image/x-icon" />
+    <link rel="shortcut icon" href="<?php echo e(asset('themes/themeforest/html_n_resources/assets/images/favicon.png')); ?>" type="image/x-icon" />
     <title>Universal - Premium Admin Template</title>
 
     <!--Google font-->
@@ -16,19 +16,19 @@
     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,500,600,700" rel="stylesheet">
 
     <!-- Font Awesome -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('themes/themeforest/html_n_resources/assets/css/fontawesome.css') }}">
+    <link rel="stylesheet" type="text/css" href="<?php echo e(asset('themes/themeforest/html_n_resources/assets/css/fontawesome.css')); ?>">
 
     <!-- Themify icon -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('themes/themeforest/html_n_resources/assets/css/themify.css') }}">
+    <link rel="stylesheet" type="text/css" href="<?php echo e(asset('themes/themeforest/html_n_resources/assets/css/themify.css')); ?>">
 
     <!-- Bootstrap css -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('themes/themeforest/html_n_resources/assets/css/bootstrap.css') }}">
+    <link rel="stylesheet" type="text/css" href="<?php echo e(asset('themes/themeforest/html_n_resources/assets/css/bootstrap.css')); ?>">
 
     <!-- App css -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('themes/themeforest/html_n_resources/assets/css/style.css') }}">
+    <link rel="stylesheet" type="text/css" href="<?php echo e(asset('themes/themeforest/html_n_resources/assets/css/style.css')); ?>">
 
     <!-- Responsive css -->
-    <link rel="stylesheet" type="text/css" href="{{ asset('themes/themeforest/html_n_resources/assets/css/responsive.css') }}">
+    <link rel="stylesheet" type="text/css" href="<?php echo e(asset('themes/themeforest/html_n_resources/assets/css/responsive.css')); ?>">
 
 </head>
 
@@ -54,7 +54,7 @@
                 <div class="col-md-4 p-0">
                     <div class="auth-innerleft">
                         <div class="text-center">
-                            <img src="{{ asset('themes/themeforest/html_n_resources/assets/images/logo-login.png') }}" class="logo-login" alt="">
+                            <img src="<?php echo e(asset('themes/themeforest/html_n_resources/assets/images/logo-login.png')); ?>" class="logo-login" alt="">
                             <hr>
                             <div class="social-media">
                                 <ul class="list-inline">
@@ -73,7 +73,8 @@
                             <h4>LOGIN</h4>
                             <h6>Ingresa tu numero de documento y tu contraseña para continuar.</h6>
                             <div class="card mt-4 p-4 mb-0">
-                                {!! Form::open(['route' => ['login'],'method' => 'POST','id' => 'form_login', 'class' => 'theme-form']) !!}
+                                <?php echo Form::open(['route' => ['login'],'method' => 'POST','id' => 'form_login', 'class' => 'theme-form']); ?>
+
                                     <div class="form-group">
                                         <label class="col-form-label pt-0"><b>Documento</b></label>
                                         <input type="text" name="usu_document" class="form-control form-control-lg" required>
@@ -98,7 +99,8 @@
                                             <button type="submit" class="btn btn-secondary-gradien">LOGIN</button>
                                         </div>
                                     </div>
-                                {!! Form::close() !!}
+                                <?php echo Form::close(); ?>
+
                             </div>
                         </div>
                     </div>
@@ -111,19 +113,19 @@
 <!--page-wrapper Ends-->
 
 <!-- latest jquery-->
-<script src="{{ asset('themes/themeforest/html_n_resources/assets/js/jquery-3.2.1.min.js') }}"></script>
+<script src="<?php echo e(asset('themes/themeforest/html_n_resources/assets/js/jquery-3.2.1.min.js')); ?>"></script>
 
 <!-- Bootstrap js-->
-<script src="{{ asset('themes/themeforest/html_n_resources/assets/js/bootstrap/popper.min.js') }}"></script>
-<script src="{{ asset('themes/themeforest/html_n_resources/assets/js/bootstrap/bootstrap.js') }}"></script>
+<script src="<?php echo e(asset('themes/themeforest/html_n_resources/assets/js/bootstrap/popper.min.js')); ?>"></script>
+<script src="<?php echo e(asset('themes/themeforest/html_n_resources/assets/js/bootstrap/bootstrap.js')); ?>"></script>
 
 <!-- Theme js-->
-<script src="{{ asset('themes/themeforest/html_n_resources/assets/js/script.js') }}"></script>
+<script src="<?php echo e(asset('themes/themeforest/html_n_resources/assets/js/script.js')); ?>"></script>
 
 <!-- Scripts -->
-@routes
-<script src="{{ asset('js/aplication.js') }}"></script>
+<?php echo app('Tightenco\Ziggy\BladeRouteGenerator')->generate(); ?>
+<script src="<?php echo e(asset('js/aplication.js')); ?>"></script>
 
 </body>
 
-</html>
+</html><?php /**PATH D:\Kuma\MAMP\htdocs\PruebaLaravelGM\resources\views/auth/login.blade.php ENDPATH**/ ?>

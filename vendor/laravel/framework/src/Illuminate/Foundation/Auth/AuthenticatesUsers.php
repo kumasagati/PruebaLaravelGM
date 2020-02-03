@@ -4,6 +4,7 @@ namespace Illuminate\Foundation\Auth;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
 trait AuthenticatesUsers
@@ -35,8 +36,10 @@ trait AuthenticatesUsers
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
         // the login attempts for this application. We'll key this by the username and
         // the IP address of the client making these requests into this application.
-        if (method_exists($this, 'hasTooManyLoginAttempts') &&
-            $this->hasTooManyLoginAttempts($request)) {
+        if (
+            method_exists($this, 'hasTooManyLoginAttempts') &&
+            $this->hasTooManyLoginAttempts($request)
+        ) {
             $this->fireLockoutEvent($request);
 
             return $this->sendLockoutResponse($request);
@@ -65,8 +68,16 @@ trait AuthenticatesUsers
     protected function validateLogin(Request $request)
     {
         $request->validate([
-            $this->username() => 'required|string',
-            'password' => 'required|string',
+            $this->username() => 'required|string|numeric|digits_between:8,12|exists:users,usu_document',
+            'usu_password' => 'required|string',
+        ], [
+            $this->username() . ".required" => "El campo <b>Documento</b> es obligatorio.",
+            $this->username() . ".string" => "El campo <b>Documento</b> no puede estar vacio.",
+            $this->username() . ".exists" => "No existe un usuario con el numero de documento ingresado.",
+            $this->username() . ".digits_between" => "El <b>Documento</b> debe estar entre 8 y 12 digitos.",
+            $this->username() . ".numeric" => "El campo <b>Documento</b> solo debe contener numeros.",
+            "usu_password.required" => "El campo <b>Contraseña</b> es obligatorio.",
+            "usu_password.string" => "El campo <b>Contraseña</b> no puede estar vacio."
         ]);
     }
 
@@ -79,7 +90,8 @@ trait AuthenticatesUsers
     protected function attemptLogin(Request $request)
     {
         return $this->guard()->attempt(
-            $this->credentials($request), $request->filled('remember')
+            $this->credentials($request),
+            $request->filled('remember')
         );
     }
 
@@ -91,7 +103,7 @@ trait AuthenticatesUsers
      */
     protected function credentials(Request $request)
     {
-        return $request->only($this->username(), 'password');
+        return $request->only($this->username(), 'usu_password');
     }
 
     /**
@@ -107,7 +119,10 @@ trait AuthenticatesUsers
         $this->clearLoginAttempts($request);
 
         return $this->authenticated($request, $this->guard()->user())
-                ?: redirect()->intended($this->redirectPath());
+            ?: response()->json([
+                "mensaje" => "<div class='alert alert-success'>Se ha logueado correctamente.</div>",
+                "resultado" => "1"
+            ]);
     }
 
     /**
