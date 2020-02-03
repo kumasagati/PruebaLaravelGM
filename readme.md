@@ -1,3 +1,24 @@
+<p><b>Informacion del Programador</b></p>
+<p> 
+    Nombre: <b>Juan Pablo Olaya Suaza</b><br>
+    Titulo: <b>Tecnologo en Analisis y Desarrollo de Sistemas de Informacion</b><br>
+    Correo Electronico: <b>juanpa-1920@hotmail.com</b><br>
+    Experiencia: <b>3 meses en Desarrollo Web</b>
+<p>
+<p><b>Informacion del Proyecto</b></p>
+<p> 
+    Nombre del Proyecto: <b>Prueba Laravel GM</b><br>
+    Descripcion: <b>Este proyecto fue creado con el proposito de demostrar el conocimiento que tiene el programador sobre el Framework de Laravel</b><br>
+    Estado Actual: <b>El proyecto se encuentra en el estado de Desarrollo</b>
+    Ruta Acceso: <b>La ruta de acceso esta determinada por la aplicacion que mantiene su servidor local</b><br>
+    Datos de usuario: <b> Los datos para loguearse en el proyecto son: <br> - Documento: 1005715067 <br> - Contraseña: wasd1234 <br></b>
+    Estos datos se podran ingresar una vez se haya realizado la configuracion del proyecto, la cual esta especificada en el siguiente apartado.
+</p>
+<p><b>Configuracion del Proyecto</b></p>
+<p>
+    Una vez descargado y montado el proyecto en el servidor local, se debe crear una base de datos llamada <b>"pruebalaravelgm"</b> junto a un usuario llamado <b>"kumasagati"</b>, el cual debera poseer todos los permisos. Seguido de esto, se debe ir a la raiz del directorio del proyecto, abrir una consola de comandos y ejecutar el comando <b>"php artisan migrate --seed"</b>.
+</p>
+
 <p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
 
 <p align="center">
